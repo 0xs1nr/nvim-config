@@ -1,0 +1,86 @@
+{
+    "Main": {
+        "prefix": "main",
+        "body": [
+            "def main():",
+            "\t${0:pass}",
+            "",
+            "if __name__ == \"__main__\":",
+            "\tmain()"
+        ],
+        "description": "Create main"
+    },
+    "Function": {
+        "prefix": "def",
+        "body": [
+            "def ${1:func_name}(${2:args}):",
+            "\t${0:pass}"
+        ],
+        "description": "Define a function"
+    },
+    "Class": {
+        "prefix": "class",
+        "body": [
+            "class ${1:class_name}:",
+            "\tdef __init__(self${2:, args}):",
+            "\t\t${0:pass}"
+        ],
+        "description": "Define a class"
+    },
+    "Cryptofile": {
+        "prefix": "crypto",
+        "body": [
+            "#!/usr/bin/env python3",
+            "",
+            "from Crypto.Util.number import bytes_to_long as btl, long_to_bytes as ltb${1}",
+            "${2}",
+            "",
+            "# ---- Headers ----",
+            "",
+            "",
+            "# ---- Functions ----",
+            "",
+            "",
+            "def main():",
+            "\t${0:pass}",
+            "",
+            "if __name__ == \"__main__\":",
+            "\tmain()"
+        ],
+        "description": "Template for crypto challs"
+    },
+    "Pwnfile": {
+        "prefix": "pwn",
+        "body": [
+            "#!/usr/bin/env python3",
+            "",
+            "from pwn import *",
+            "${1}",
+            "",
+            "# ---- Headers ----",
+            "HOST = \"${2}\"",
+            "PORT = ${3}",
+            "",
+            "elf = context.binary = ELF(\"${4}\", checksec=False)",
+            "rop_elf = ROP(elf)",
+            "",
+            "remote_acess = False",
+            "#remote_acess = True",
+            "",
+            "if remote_acess:",
+            "\tio = remote(HOST, PORT)",
+            "else:",
+            "\tio = process()",
+            "",
+            "# ---- Functions ----",
+            "",
+            "",
+            "def main():",
+            "\t${0:pass}",
+            "",
+            "if __name__ == \"__main__\":",
+            "\tmain()"
+        ],
+        "description": "Template for pwn challs"
+    }
+}

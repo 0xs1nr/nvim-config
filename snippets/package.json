@@ -1,0 +1,15 @@
+{
+  "name": "0xs1nr-snippets",
+  "contributes": {
+    "snippets": [
+      {
+        "language": "python",
+        "path": "./python.json"
+      },
+      {
+        "language": "c",
+        "path": "./c.json"
+      }
+    ]
+  }
+}
