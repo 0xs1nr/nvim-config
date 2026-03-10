@@ -68,15 +68,29 @@ require("lazy").setup({
             })
         end
     },
+
+    -- Add pywal (for dynamic colorschemes)
+    {
+        "AlphaTechnolog/pywal.nvim",
+        name = "pywal",
+        config = function()
+            require("pywal").setup()
+
+--            vim.cmd.colorscheme("pywal")
+        end
+    }
 })
+
 
 -- Keymap for expanding the snippets
 local ls = require("luasnip")
 
 vim.keymap.set({"i", "s"}, "<Tab>", function() -- TODO: May need to correct some bugs
-    if ls.expand_or_jumpable() then
-        ls.expand_or_jump()
-    else
-        return "<Tab>"
-    end
+if ls.expand_or_jumpable() then
+    ls.expand_or_jump()
+else
+    return "<Tab>"
+end
 end)
+
+
