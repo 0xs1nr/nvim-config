@@ -10,16 +10,8 @@
         ],
         "description": "Create main"
     },
-    "Function": {
-        "prefix": "def",
-        "body": [
-            "def ${1:func_name}(${2:args}):",
-            "\t${0:pass}"
-        ],
-        "description": "Define a function"
-    },
     "Class": {
-        "prefix": "class",
+        "prefix": "clas",
         "body": [
             "class ${1:class_name}:",
             "\tdef __init__(self${2:, args}):",

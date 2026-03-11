@@ -3,15 +3,5 @@
         "prefix": "stdio",
         "body": ["#include <stdio.h>"],
         "description": "include the stdio library in C"
-    },
-    "Main": {
-        "prefix": "main",
-        "body": [
-            "int main(int argc, char *argv[]) {",
-            "\t${0}\n",
-            "\treturn 0;",
-            "}"
-        ],
-        "description": "Create main"
     }
 }

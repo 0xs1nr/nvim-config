@@ -59,10 +59,15 @@ require("lazy").setup({
     -- Add LuaSnip (For making snippets)
     {
         "L3MON4D3/LuaSnip",
+        dependencies = { "rafamadriz/friendly-snippets" },
         version = "v2.*",
         build = "make install_jsregexp",
         config = function()
 
+            -- Load snippets from VsCode
+            require("luasnip.loaders.from_vscode").lazy_load()
+
+            -- Load my own snippes
             require("luasnip.loaders.from_vscode").lazy_load({
                 paths = { vim.fn.stdpath("config") .. "/snippets" }
             })
@@ -92,5 +97,4 @@ else
     return "<Tab>"
 end
 end)
-
 
