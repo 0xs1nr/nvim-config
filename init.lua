@@ -28,7 +28,7 @@ vim.opt.expandtab = true
 
 vim.opt.wrap = false
 
-vim.opt.termguicolors = true
+vim.opt.termguicolors = false
 
 vim.opt.clipboard = "unnamedplus"
 
