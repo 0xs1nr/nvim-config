@@ -1,3 +1,7 @@
+-- ===============
+-- = BASIC SETUP =
+-- ===============
+
 -- Plugin Manager (lazy.nvim)
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
@@ -28,14 +32,14 @@ vim.opt.expandtab = true
 
 vim.opt.wrap = false
 
-vim.opt.termguicolors = false
-
 vim.opt.clipboard = "unnamedplus"
 
--- Plugins
+-- ===========
+-- = PLUGINS =
+-- ===========
 require("lazy").setup({ 
 
-    -- Add a theme (Dracula) TODO: Integrate with my system colors
+    -- Add a theme (Dracula)
     {
         "Mofiqul/dracula.nvim", -- Github repo for the theme
         config = function()
@@ -73,17 +77,6 @@ require("lazy").setup({
             })
         end
     },
-
-    -- Add pywal (for dynamic colorschemes)
-    {
-        "AlphaTechnolog/pywal.nvim",
-        name = "pywal",
-        config = function()
-            require("pywal").setup()
-
---            vim.cmd.colorscheme("pywal")
-        end
-    }
 })
 
 
