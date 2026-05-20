@@ -1,7 +1,0 @@
-{
-    "Stdio": {
-        "prefix": "stdio",
-        "body": ["#include <stdio.h>"],
-        "description": "include the stdio library in C"
-    }
-}

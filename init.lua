@@ -70,24 +70,7 @@ require("lazy").setup({
 
             -- Load snippets from VsCode
             require("luasnip.loaders.from_vscode").lazy_load()
-
-            -- Load my own snippes
-            require("luasnip.loaders.from_vscode").lazy_load({
-                paths = { vim.fn.stdpath("config") .. "/snippets" }
-            })
         end
     },
 })
-
-
--- Keymap for expanding the snippets
-local ls = require("luasnip")
-
-vim.keymap.set({"i", "s"}, "<Tab>", function() -- TODO: May need to correct some bugs
-if ls.expand_or_jumpable() then
-    ls.expand_or_jump()
-else
-    return "<Tab>"
-end
-end)
 
