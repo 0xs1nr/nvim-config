@@ -1,7 +1,6 @@
 -- ===============
 -- = BASIC SETUP =
 -- ===============
-
 -- Plugin Manager (lazy.nvim)
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
@@ -17,6 +16,7 @@ if not vim.loop.fs_stat(lazypath) then
     })
 end
 
+-- Change the runtimepath for executing the plugins
 vim.opt.rtp:prepend(lazypath)
 
 -- Leader key
@@ -32,7 +32,20 @@ vim.opt.expandtab = true
 
 vim.opt.wrap = false
 
+-- Use the system clipboard
 vim.opt.clipboard = "unnamedplus"
+
+-- =================
+-- = AUTO-COMMANDS =
+-- =================
+-- Highlight when copying text
+vim.api.nvim_create_autocmd('TextYankPost', {
+    desc = 'Highlight when copying text',
+    group = vim.api.nvim_create_augroup('hightlight-yank', { clear = true }),
+    callback = function()
+        vim.highlight.on_yank()
+    end,
+})
 
 -- ===========
 -- = PLUGINS =
@@ -60,14 +73,13 @@ require("lazy").setup({
         end
     },
 
-    -- Add LuaSnip (For making snippets)
+    -- Add LuaSnip (For snippets)
     {
         "L3MON4D3/LuaSnip",
         dependencies = { "rafamadriz/friendly-snippets" },
         version = "v2.*",
         build = "make install_jsregexp",
         config = function()
-
             -- Load snippets from VsCode
             require("luasnip.loaders.from_vscode").lazy_load()
         end
