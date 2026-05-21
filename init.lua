@@ -47,6 +47,15 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     end,
 })
 
+-- ============
+-- = KEYBINDS =
+-- ============
+-- Move line up
+vim.keymap.set('n', '<C-k>', 'ddkP', { desc = 'Move line up' })
+
+-- Move line down
+vim.keymap.set('n', '<C-j>', 'ddp', { desc = 'Move line down' })
+
 -- ===========
 -- = PLUGINS =
 -- ===========
