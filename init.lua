@@ -92,5 +92,17 @@ require("lazy").setup({
             require("luasnip.loaders.from_vscode").lazy_load()
         end
     },
+
+--  =======
+--  = LSP =
+--  =======
+    {
+        "neovim/nvim-lspconfig",
+        config = function()
+            vim.lsp.enable('lua_ls')
+            vim.lsp.enable('pyright')
+            vim.lsp.enable('ccls')
+    	end
+    }
 })
 
