@@ -1,6 +1,3 @@
--- ===============
--- = BASIC SETUP =
--- ===============
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -16,50 +13,64 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     os.exit(1)
   end
 end
+
 vim.opt.rtp:prepend(lazypath)
 
--- Leader key
-vim.g.mapleader = " "
+-- ===============
+-- = BASIC SETUP =
+-- ===============
+do
+    -- Leader key
+    vim.g.mapleader = " "
 
--- Basic options
-vim.opt.number = true
-vim.opt.relativenumber = true
+    vim.g.have_nerd_font = false
 
-vim.opt.tabstop = 4 -- TODO: Modify this to be dependent on the filetype (.py, .lua, .c, etc)
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
+    -- Basic options
+    vim.opt.number = true
+    vim.opt.relativenumber = true
 
-vim.opt.wrap = false
+    vim.opt.tabstop = 4 -- TODO: Modify this to be dependent on the filetype (.py, .lua, .c, etc)
+    vim.opt.shiftwidth = 4
+    vim.opt.expandtab = true
 
--- Use the system clipboard
-vim.opt.clipboard = "unnamedplus"
+    vim.opt.wrap = false
 
--- =================
--- = AUTO-COMMANDS =
--- =================
--- Highlight when copying text
-vim.api.nvim_create_autocmd('TextYankPost', {
-    desc = 'Highlight when copying text',
-    group = vim.api.nvim_create_augroup('hightlight-yank', { clear = true }),
-    callback = function()
-        vim.highlight.on_yank()
-    end,
-})
+    -- Use the system clipboard
+    vim.opt.clipboard = "unnamedplus"
+end
 
 -- ============
 -- = KEYBINDS =
 -- ============
--- Move line up
-vim.keymap.set('n', '<C-k>', 'ddkP', { desc = 'Move line up' })
+-- :help vim.keymap
+do
+    -- Move line up and down
+    vim.keymap.set('n', '<C-k>', 'ddkP', { desc = 'Move line up' })
+    vim.keymap.set('n', '<C-j>', 'ddp', { desc = 'Move line down' })
 
--- Move line down
-vim.keymap.set('n', '<C-j>', 'ddp', { desc = 'Move line down' })
+    -- Clear hightlights on search when pressing <Esc> in normal mode
+    vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear hightlight on search' })
+end
+
+-- =================
+-- = AUTO-COMMANDS =
+-- =================
+-- :help lua-guide-autocommands
+do
+    -- Highlight when copying text
+    vim.api.nvim_create_autocmd('TextYankPost', {
+        desc = 'Highlight when copying text',
+        group = vim.api.nvim_create_augroup('hightlight-yank', { clear = true }),
+        callback = function()
+            vim.hl.on_yank() -- :help vim.highlight
+        end
+    })
+end
 
 -- ===========
 -- = PLUGINS =
 -- ===========
 require("lazy").setup({ 
-
     -- Add a theme (Dracula)
     {
         "Mofiqul/dracula.nvim", -- Github repo for the theme
@@ -81,8 +92,8 @@ require("lazy").setup({
         end
     },
 
-    -- Add LuaSnip (For snippets)
-    {
+    -- Setup autocompletion
+    { 
         "L3MON4D3/LuaSnip",
         dependencies = { "rafamadriz/friendly-snippets" },
         version = "v2.*",
@@ -96,7 +107,7 @@ require("lazy").setup({
 
 --  =======
 --  = LSP =
---  =======
+--  ======= 
     {
         "neovim/nvim-lspconfig",
         config = function()
