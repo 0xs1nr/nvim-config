@@ -1,21 +1,3 @@
--- Bootstrap lazy.nvim
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
-end
-
-vim.opt.rtp:prepend(lazypath)
-
 -- ===============
 -- = BASIC SETUP =
 -- ===============
@@ -29,11 +11,13 @@ do
     vim.opt.number = true
     vim.opt.relativenumber = true
 
-    vim.opt.tabstop = 4 -- TODO: Modify this to be dependent on the filetype (.py, .lua, .c, etc)
+    vim.opt.tabstop = 4
     vim.opt.shiftwidth = 4
     vim.opt.expandtab = true
 
     vim.opt.wrap = false
+
+    vim.opt.winborder = "rounded"
 
     -- Use the system clipboard
     vim.opt.clipboard = "unnamedplus"
@@ -44,6 +28,8 @@ end
 -- ============
 -- :help vim.keymap
 do
+    vim.keymap.set('n', '<leader>o', ':update<CR> :source<CR>', { desc = 'Update and source the config' })
+
     -- Move line up and down
     vim.keymap.set('n', '<C-k>', 'ddkP', { desc = 'Move line up' })
     vim.keymap.set('n', '<C-j>', 'ddp', { desc = 'Move line down' })
@@ -70,62 +56,37 @@ end
 -- ===========
 -- = PLUGINS =
 -- ===========
-require("lazy").setup({ 
-    -- Add a theme (Dracula)
-    {
-        "Mofiqul/dracula.nvim", -- Github repo for the theme
-        config = function()
-            vim.cmd.colorscheme("dracula") -- Set the theme
+do
+    vim.pack.add({
+        { src = "https://github.com/vague2k/vague.nvim" },
+        { src = "https://github.com/windwp/nvim-autopairs" },
+        { src = "https://github.com/stevearc/oil.nvim" },
+        { src = "https://github.com/echasnovski/mini.pick" },
+        { src = "https://github.com/neovim/nvim-lspconfig" }
+    })
 
-            -- Transparent background 
-            vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-            vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-        end
-    },
+    require "nvim-autopairs".setup()
+    require "oil".setup()
+    require "mini.pick".setup()
 
-    -- Add autopairs
-    {
-        "windwp/nvim-autopairs",
-        event = "InsertEnter",
-        config = function()
-            require("nvim-autopairs").setup({})
-        end
-    },
+    -- === mini.pick keybinds ===
+    vim.keymap.set('n', '<leader>f', ":Pick files<CR>")
+    vim.keymap.set('n', '<leader>h', ":Pick help<CR>")
 
-    -- Setup autocompletion
-    { 
-        "L3MON4D3/LuaSnip",
-        dependencies = { "rafamadriz/friendly-snippets" },
-        version = "v2.*",
-        build = "make install_jsregexp",
-        config = function()
-            require('luasnip').setup {}
-            -- Load snippets from VsCode
-            require("luasnip.loaders.from_vscode").lazy_load()
-        end
-    },
+    -- === Oil keybinds ===
+    vim.keymap.set('n', '<leader>e', ":Oil<CR>")
 
---  =======
---  = LSP =
---  ======= 
-    {
-        "neovim/nvim-lspconfig",
-        config = function()
-            vim.lsp.enable('lua_ls')
-            vim.lsp.enable('pyright')
-            vim.lsp.enable('ccls')
-    	end
-    }
-})
+    -- === lsp configuration ===
+    vim.lsp.enable({ "lua_ls", "clangd" })
 
-local ls = require("luasnip")
+    -- :help lsp-defaults
+    vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format, { desc = 'Formats the buffer based on the language' })
 
-vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
-vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump( 1) end, {silent = true})
-vim.keymap.set({"i", "s"}, "<C-J>", function() ls.jump(-1) end, {silent = true})
+    -- === colorscheme configuration ===
+    vim.cmd.colorscheme("vague") -- Set the theme
+    vim.cmd(":hi statusline guibg=NONE")
 
-vim.keymap.set({"i", "s"}, "<C-E>", function()
-	if ls.choice_active() then
-		ls.change_choice(1)
-	end
-end, {silent = true})
+    -- Transparent background
+    vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+    vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+end

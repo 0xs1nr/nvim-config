@@ -1,0 +1,24 @@
+{
+  "plugins": {
+    "mini.pick": {
+      "rev": "34fdef3b0966974378c4f39e3ddb54ffc628fbe9",
+      "src": "https://github.com/echasnovski/mini.pick"
+    },
+    "nvim-autopairs": {
+      "rev": "7b9923abad60b903ece7c52940e1321d39eccc79",
+      "src": "https://github.com/windwp/nvim-autopairs"
+    },
+    "nvim-lspconfig": {
+      "rev": "229b79051b380377664edc4cbd534930154921a1",
+      "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "oil.nvim": {
+      "rev": "b73018b75affd13fa38e2fc94ef753b465f770d7",
+      "src": "https://github.com/stevearc/oil.nvim"
+    },
+    "vague.nvim": {
+      "rev": "f911602f49116b1ebab95a45391e1cfe2dc62c2b",
+      "src": "https://github.com/vague2k/vague.nvim"
+    }
+  }
+}
