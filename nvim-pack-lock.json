@@ -1,9 +1,5 @@
 {
   "plugins": {
-    "dracula.nvim": {
-      "rev": "ae752c13e95fb7c5f58da4b5123cb804ea7568ee",
-      "src": "https://github.com/Mofiqul/dracula.nvim"
-    },
     "mini.pick": {
       "rev": "34fdef3b0966974378c4f39e3ddb54ffc628fbe9",
       "src": "https://github.com/echasnovski/mini.pick"

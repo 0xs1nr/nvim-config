@@ -67,6 +67,7 @@ end
 -- ===========
 -- = PLUGINS =
 -- ===========
+-- :help vim.pack
 do
     vim.pack.add({
         { src = "https://github.com/vague2k/vague.nvim" },
@@ -74,14 +75,18 @@ do
         { src = "https://github.com/stevearc/oil.nvim" },
         { src = "https://github.com/echasnovski/mini.pick" },
         { src = "https://github.com/neovim/nvim-lspconfig" },
-        { src = "https://github.com/rachartier/tiny-inline-diagnostic.nvim" }
+        { src = "https://github.com/rachartier/tiny-inline-diagnostic.nvim" },
+        { src = "https://github.com/chomosuke/typst-preview.nvim" }
     })
 
     require "nvim-autopairs".setup()
     require "oil".setup()
     require "mini.pick".setup()
     require "tiny-inline-diagnostic".setup()
-    vim.diagnostic.config({ virtual_text = false })
+    vim.diagnostic.config({ virtual_text = false })                    -- Disables annoying error messages
+    require 'typst-preview'.setup {
+        open_cmd = 'firefox %s -P typst-preview --class typst-preview' -- Opens typst-preview in firefox
+    }
 
     -- === mini.pick keybinds ===
     vim.keymap.set('n', '<leader>f', ":Pick files<CR>")
@@ -90,8 +95,11 @@ do
     -- === Oil keybinds ===
     vim.keymap.set('n', '<leader>e', ":Oil<CR>")
 
+    -- === typst-preview keybinds ===
+    vim.keymap.set('n', '<leader>ts', ':TypstPreview<CR>', { desc = 'Start Typst preview' })
+
     -- === lsp configuration ===
-    vim.lsp.enable({ "lua_ls", "clangd" })
+    vim.lsp.enable({ "lua_ls", "clangd", "tinymist" })
 
     -- :help lsp-defaults
     vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format, { desc = 'Formats the buffer based on the language' })
