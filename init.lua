@@ -51,6 +51,17 @@ do
             vim.hl.on_yank() -- :help vim.highlight
         end
     })
+
+    -- Setup autocompletion
+    vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(ev)
+            local client = vim.lsp.get_client_by_id(ev.data.client_id)
+            if client:supports_method('textDocument/completion') then
+                vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+            end
+        end,
+    })
+    vim.cmd("set completeopt+=noselect")
 end
 
 -- ===========
@@ -62,12 +73,15 @@ do
         { src = "https://github.com/windwp/nvim-autopairs" },
         { src = "https://github.com/stevearc/oil.nvim" },
         { src = "https://github.com/echasnovski/mini.pick" },
-        { src = "https://github.com/neovim/nvim-lspconfig" }
+        { src = "https://github.com/neovim/nvim-lspconfig" },
+        { src = "https://github.com/rachartier/tiny-inline-diagnostic.nvim" }
     })
 
     require "nvim-autopairs".setup()
     require "oil".setup()
     require "mini.pick".setup()
+    require "tiny-inline-diagnostic".setup()
+    vim.diagnostic.config({ virtual_text = false })
 
     -- === mini.pick keybinds ===
     vim.keymap.set('n', '<leader>f', ":Pick files<CR>")
