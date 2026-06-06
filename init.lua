@@ -31,8 +31,14 @@ do
     vim.keymap.set('n', '<leader>o', ':update<CR> :source<CR>', { desc = 'Update and source the config' })
 
     -- Move line up and down
-    vim.keymap.set('n', '<C-k>', 'ddkP', { desc = 'Move line up' })
-    vim.keymap.set('n', '<C-j>', 'ddp', { desc = 'Move line down' })
+    vim.keymap.set('n', '<M-k>', 'ddkP', { desc = 'Move line up' })
+    vim.keymap.set('n', '<M-j>', 'ddp', { desc = 'Move line down' })
+
+    -- Move between windows
+    vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+    vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+    vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+    vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
     -- Clear hightlights on search when pressing <Esc> in normal mode
     vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear hightlight on search' })
@@ -76,7 +82,8 @@ do
         { src = "https://github.com/echasnovski/mini.pick" },
         { src = "https://github.com/neovim/nvim-lspconfig" },
         { src = "https://github.com/rachartier/tiny-inline-diagnostic.nvim" },
-        { src = "https://github.com/chomosuke/typst-preview.nvim" }
+        { src = "https://github.com/chomosuke/typst-preview.nvim" },
+        { src = "https://github.com/NMAC427/guess-indent.nvim" }
     })
 
     require "nvim-autopairs".setup()
@@ -87,6 +94,7 @@ do
     require 'typst-preview'.setup {
         open_cmd = 'firefox %s -P typst-preview --class typst-preview' -- Opens typst-preview in firefox
     }
+    require 'guess-indent'.setup()
 
     -- === mini.pick keybinds ===
     vim.keymap.set('n', '<leader>f', ":Pick files<CR>")
@@ -99,7 +107,7 @@ do
     vim.keymap.set('n', '<leader>ts', ':TypstPreview<CR>', { desc = 'Start Typst preview' })
 
     -- === lsp configuration ===
-    vim.lsp.enable({ "lua_ls", "clangd", "tinymist" })
+    vim.lsp.enable({ "lua_ls", "clangd", "tinymist", 'pyright' }) -- <-- Insert your LSPs here
 
     -- :help lsp-defaults
     vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format, { desc = 'Formats the buffer based on the language' })
