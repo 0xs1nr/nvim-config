@@ -28,7 +28,12 @@ end
 -- ============
 -- :help vim.keymap
 do
+    -- Update and source the config
     vim.keymap.set('n', '<leader>o', ':update<CR> :source<CR>', { desc = 'Update and source the config' })
+
+    -- Write and quit
+    vim.keymap.set('n', '<leader>w', ':w<CR>', { desc = 'Write the file on disk' })
+    vim.keymap.set('n', '<leader>q', ':q<CR>', { desc = 'Quit the file'})
 
     -- Move line up and down
     vim.keymap.set('n', '<M-k>', 'ddkP', { desc = 'Move line up' })
@@ -83,7 +88,8 @@ do
         { src = "https://github.com/neovim/nvim-lspconfig" },
         { src = "https://github.com/rachartier/tiny-inline-diagnostic.nvim" },
         { src = "https://github.com/chomosuke/typst-preview.nvim" },
-        { src = "https://github.com/NMAC427/guess-indent.nvim" }
+        { src = "https://github.com/NMAC427/guess-indent.nvim" },
+        { src = "https://github.com/DamianVCechov/hexview.nvim" },
     })
 
     require "nvim-autopairs".setup()
@@ -95,6 +101,7 @@ do
         open_cmd = 'firefox %s -P typst-preview --class typst-preview' -- Opens typst-preview in firefox
     }
     require 'guess-indent'.setup()
+    require 'hexview'.setup()
 
     -- === mini.pick keybinds ===
     vim.keymap.set('n', '<leader>f', ":Pick files<CR>")
@@ -111,6 +118,7 @@ do
 
     -- :help lsp-defaults
     vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format, { desc = 'Formats the buffer based on the language' })
+    vim.keymap.set('n', 'grd', vim.lsp.buf.definition, { desc = '[G]oto [D]efinition' })
 
     -- === colorscheme configuration ===
     vim.cmd.colorscheme("vague") -- Set the theme
